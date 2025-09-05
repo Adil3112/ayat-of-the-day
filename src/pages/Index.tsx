@@ -1,6 +1,7 @@
 import { IslamicCard } from "@/components/IslamicCard";
 import { useIslamicContent } from "@/hooks/useIslamicContent";
-import { Building2, Sparkles } from "lucide-react";
+import { Building2, Sparkles, RefreshCw } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const Index = () => {
   const {
@@ -66,10 +67,29 @@ const Index = () => {
     )
   };
 
+  const handleGlobalRefresh = async () => {
+    await Promise.all([refreshAyat(), refreshDua()]);
+  };
+
+  const isGlobalLoading = isLoadingAyat || isLoadingDua;
+
   return (
     <div className="min-h-screen bg-gradient-islamic">
       {/* Header Section */}
-      <header className="text-center py-16 px-4">
+      <header className="relative text-center py-16 px-4">
+        {/* Global Refresh Button */}
+        <div className="absolute top-8 right-8">
+          <Button
+            onClick={handleGlobalRefresh}
+            disabled={isGlobalLoading}
+            className="bg-primary/10 hover:bg-primary/20 text-primary border border-primary/30 hover:border-primary/50 transition-all duration-300 font-english"
+            size="lg"
+          >
+            <RefreshCw className={`w-5 h-5 mr-2 ${isGlobalLoading ? 'animate-spin' : ''}`} />
+            {isGlobalLoading ? 'Refreshing...' : 'Refresh All'}
+          </Button>
+        </div>
+
         <div className="inline-flex items-center gap-3 mb-6">
           <Building2 className="w-10 h-10 text-primary" />
           <h1 className="text-5xl font-bold text-foreground font-english">
@@ -119,7 +139,7 @@ const Index = () => {
             May Allah bless you with knowledge, guidance, and spiritual growth through these daily reminders.
           </p>
           <div className="mt-4 text-xs text-muted-foreground font-english">
-            Content refreshes every 12 hours • Click refresh buttons anytime for new content
+            Content refreshes every 12 hours • Individual refresh buttons on each card • Global refresh button at top right
           </div>
         </div>
         
