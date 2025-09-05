@@ -36,15 +36,12 @@ All colors MUST be HSL.
     --input: 205 30% 88%;
     --ring: 197 71% 73%;
 
-    --islamic-gold: 45 100% 60%;
-    --islamic-green: 150 60% 45%;
-    
-    --gradient-islamic: linear-gradient(135deg, hsl(197 71% 73%), hsl(205 100% 85%), hsl(0 0% 100%));
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(205 30% 98%));
-    --shadow-islamic: 0 15px 35px -5px hsl(197 71% 73% / 0.15);
-    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    
-    --radius: 1rem;
+    --gradient-sky: linear-gradient(135deg, hsl(197 71% 73%), hsl(205 100% 85%));
+    --gradient-subtle: linear-gradient(180deg, hsl(205 50% 98%), hsl(197 50% 96%));
+    --shadow-quote: 0 10px 30px -5px hsl(197 71% 73% / 0.2);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -92,13 +89,10 @@ All colors MUST be HSL.
     --input: 210 15% 20%;
     --ring: 197 71% 73%;
 
-    --islamic-gold: 45 100% 65%;
-    --islamic-green: 150 60% 50%;
-    
-    --gradient-islamic: linear-gradient(135deg, hsl(197 71% 73%), hsl(205 80% 70%), hsl(210 15% 12%));
-    --gradient-card: linear-gradient(145deg, hsl(210 15% 12%), hsl(210 15% 16%));
-    --shadow-islamic: 0 15px 35px -5px hsl(197 71% 73% / 0.2);
-    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --gradient-sky: linear-gradient(135deg, hsl(197 71% 73%), hsl(205 80% 70%));
+    --gradient-subtle: linear-gradient(180deg, hsl(210 20% 8%), hsl(210 15% 12%));
+    --shadow-quote: 0 10px 30px -5px hsl(197 71% 73% / 0.3);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -117,19 +111,5 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', sans-serif;
-  }
-  
-  .font-arabic {
-    font-family: 'Amiri', serif;
-    direction: rtl;
-    text-align: right;
-    line-height: 2;
-  }
-  
-  .font-english {
-    font-family: 'Inter', sans-serif;
-    direction: ltr;
-    text-align: left;
   }
 }
