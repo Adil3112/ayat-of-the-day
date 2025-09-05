@@ -1,60 +1,138 @@
-import { QuoteCard } from "@/components/QuoteCard";
-import { useQuotes } from "@/hooks/useQuotes";
-import { Sparkles } from "lucide-react";
+import { IslamicCard } from "@/components/IslamicCard";
+import { useIslamicContent } from "@/hooks/useIslamicContent";
+import { Building2, Sparkles } from "lucide-react";
 
 const Index = () => {
   const {
-    quoteOfTheDay,
-    randomQuote,
-    refreshQuoteOfTheDay,
-    refreshRandomQuote,
-    isLoadingQOTD,
-    isLoadingRandom
-  } = useQuotes();
+    ayatOfTheDay,
+    duaOfTheDay,
+    refreshAyat,
+    refreshDua,
+    isLoadingAyat,
+    isLoadingDua
+  } = useIslamicContent();
+
+  const ayatExpandedContent = {
+    title: "Detailed Explanation",
+    content: (
+      <div className="space-y-6">
+        <div>
+          <h4 className="font-semibold text-primary mb-2">Tafseer (Detailed Explanation)</h4>
+          <p className="text-foreground/80 leading-relaxed">{ayatOfTheDay.tafseer}</p>
+        </div>
+        
+        <div>
+          <h4 className="font-semibold text-primary mb-2">Historical Context</h4>
+          <p className="text-foreground/80 leading-relaxed">{ayatOfTheDay.context}</p>
+        </div>
+        
+        <div>
+          <h4 className="font-semibold text-primary mb-2">Key Lessons</h4>
+          <ul className="list-disc list-inside space-y-2 text-foreground/80">
+            {ayatOfTheDay.lessons.map((lesson, index) => (
+              <li key={index} className="leading-relaxed">{lesson}</li>
+            ))}
+          </ul>
+        </div>
+        
+        <div className="pt-4 border-t border-border/30">
+          <p className="text-sm text-muted-foreground italic">
+            Surah {ayatOfTheDay.surah}, Ayah {ayatOfTheDay.ayahNumber}
+          </p>
+        </div>
+      </div>
+    )
+  };
+
+  const duaExpandedContent = {
+    title: "Explanation",
+    content: (
+      <div className="space-y-6">
+        <div>
+          <h4 className="font-semibold text-primary mb-2">Context & Source</h4>
+          <p className="text-foreground/80 leading-relaxed">{duaOfTheDay.context}</p>
+          <p className="text-sm text-muted-foreground mt-2 italic">Source: {duaOfTheDay.source}</p>
+        </div>
+        
+        <div>
+          <h4 className="font-semibold text-primary mb-2">Benefits of Reciting</h4>
+          <ul className="list-disc list-inside space-y-2 text-foreground/80">
+            {duaOfTheDay.benefits.map((benefit, index) => (
+              <li key={index} className="leading-relaxed">{benefit}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    )
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-subtle">
-      {/* Hero Section */}
+    <div className="min-h-screen bg-gradient-islamic">
+      {/* Header Section */}
       <header className="text-center py-16 px-4">
-        <div className="inline-flex items-center gap-3 mb-4">
-          <Sparkles className="w-8 h-8 text-primary" />
-          <h1 className="text-5xl font-bold bg-gradient-sky bg-clip-text text-transparent">
-            Daily Inspiration
+        <div className="inline-flex items-center gap-3 mb-6">
+          <Building2 className="w-10 h-10 text-primary" />
+          <h1 className="text-5xl font-bold text-foreground font-english">
+            Ayat & Dua of the Day
           </h1>
-          <Sparkles className="w-8 h-8 text-primary" />
+          <Sparkles className="w-8 h-8 text-islamic-gold" />
         </div>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-          Discover wisdom and motivation with our carefully curated collection of inspiring quotes. 
-          Refreshed automatically every two hours to keep your spirit elevated.
+        <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed font-english">
+          Daily spiritual nourishment from the Quran and Sunnah. Discover the profound wisdom, 
+          detailed explanations, and practical guidance that will illuminate your path towards Allah.
         </p>
+        <div className="mt-4 text-sm text-muted-foreground font-english">
+          ✨ Content refreshes automatically every 12 hours
+        </div>
       </header>
 
-      {/* Quotes Section */}
+      {/* Main Content Area */}
       <main className="container mx-auto px-4 pb-16">
-        <div className="grid gap-8 md:grid-cols-2 max-w-6xl mx-auto">
-          <QuoteCard
-            title="Quote of the Day"
-            quote={quoteOfTheDay.text}
-            author={quoteOfTheDay.author}
-            onRefresh={refreshQuoteOfTheDay}
-            isLoading={isLoadingQOTD}
+        <div className="grid gap-12 lg:grid-cols-2 max-w-7xl mx-auto">
+          <IslamicCard
+            title="Ayat of the Day"
+            arabicText={ayatOfTheDay.arabic}
+            translation={ayatOfTheDay.translation}
+            onRefresh={refreshAyat}
+            isLoading={isLoadingAyat}
+            expandedContent={ayatExpandedContent}
           />
           
-          <QuoteCard
-            title="Random Inspiration"
-            quote={randomQuote.text}
-            author={randomQuote.author}
-            onRefresh={refreshRandomQuote}
-            isLoading={isLoadingRandom}
+          <IslamicCard
+            title="Dua of the Day"
+            arabicText={duaOfTheDay.arabic}
+            translation={duaOfTheDay.translation}
+            onRefresh={refreshDua}
+            isLoading={isLoadingDua}
+            expandedContent={duaExpandedContent}
           />
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="text-center py-8 px-4 border-t border-border/30">
-        <p className="text-muted-foreground">
-          Auto-refreshes every 2 hours • Click refresh for new quotes anytime
-        </p>
+      {/* Footer Section */}
+      <footer className="text-center py-8 px-4 border-t border-border/30 bg-card/30 backdrop-blur-sm">
+        <div className="max-w-4xl mx-auto">
+          <p className="text-muted-foreground font-english mb-2">
+            <span className="text-primary font-semibold">Powered by Quran & Sunnah</span>
+          </p>
+          <p className="text-sm text-muted-foreground font-english">
+            May Allah bless you with knowledge, guidance, and spiritual growth through these daily reminders.
+          </p>
+          <div className="mt-4 text-xs text-muted-foreground font-english">
+            Content refreshes every 12 hours • Click refresh buttons anytime for new content
+          </div>
+        </div>
+        
+        {/* Subtle Islamic Pattern */}
+        <div className="mt-8 opacity-10">
+          <div className="flex justify-center items-center space-x-4">
+            <div className="w-2 h-2 bg-primary rounded-full"></div>
+            <div className="w-4 h-4 bg-primary transform rotate-45"></div>
+            <div className="w-2 h-2 bg-primary rounded-full"></div>
+            <div className="w-4 h-4 bg-primary transform rotate-45"></div>
+            <div className="w-2 h-2 bg-primary rounded-full"></div>
+          </div>
+        </div>
       </footer>
     </div>
   );
