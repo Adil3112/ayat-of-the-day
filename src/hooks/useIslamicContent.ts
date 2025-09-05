@@ -172,16 +172,22 @@ export const useIslamicContent = () => {
   const refreshAyat = useCallback(async () => {
     setIsLoadingAyat(true);
     await new Promise(resolve => setTimeout(resolve, 1000));
-    setAyatOfTheDay(getAyatOfTheDay());
+    // Get a different ayat by cycling through the array
+    const currentIndex = ayats.findIndex(a => a.arabic === ayatOfTheDay.arabic);
+    const nextIndex = (currentIndex + 1) % ayats.length;
+    setAyatOfTheDay(ayats[nextIndex]);
     setIsLoadingAyat(false);
-  }, [getAyatOfTheDay]);
+  }, [ayatOfTheDay.arabic]);
 
   const refreshDua = useCallback(async () => {
     setIsLoadingDua(true);
     await new Promise(resolve => setTimeout(resolve, 1000));
-    setDuaOfTheDay(getDuaOfTheDay());
+    // Get a different dua by cycling through the array
+    const currentIndex = duas.findIndex(d => d.arabic === duaOfTheDay.arabic);
+    const nextIndex = (currentIndex + 1) % duas.length;
+    setDuaOfTheDay(duas[nextIndex]);
     setIsLoadingDua(false);
-  }, [getDuaOfTheDay]);
+  }, [duaOfTheDay.arabic]);
 
   // Initialize content on mount
   useEffect(() => {

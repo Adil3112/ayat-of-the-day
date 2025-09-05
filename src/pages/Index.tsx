@@ -68,7 +68,10 @@ const Index = () => {
   };
 
   const handleGlobalRefresh = async () => {
-    await Promise.all([refreshAyat(), refreshDua()]);
+    console.log('Global refresh button clicked');
+    // Refresh both ayat and dua simultaneously
+    refreshAyat();
+    refreshDua();
   };
 
   const isGlobalLoading = isLoadingAyat || isLoadingDua;
@@ -78,15 +81,15 @@ const Index = () => {
       {/* Header Section */}
       <header className="relative text-center py-16 px-4">
         {/* Global Refresh Button */}
-        <div className="absolute top-8 right-8">
+        <div className="absolute top-8 right-8 z-10">
           <Button
             onClick={handleGlobalRefresh}
             disabled={isGlobalLoading}
-            className="bg-primary/10 hover:bg-primary/20 text-primary border border-primary/30 hover:border-primary/50 transition-all duration-300 font-english"
+            className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all duration-300 font-english font-semibold border-2 border-primary/20"
             size="lg"
           >
             <RefreshCw className={`w-5 h-5 mr-2 ${isGlobalLoading ? 'animate-spin' : ''}`} />
-            {isGlobalLoading ? 'Refreshing...' : 'Refresh All'}
+            {isGlobalLoading ? 'Refreshing...' : 'Click to Refresh'}
           </Button>
         </div>
 
