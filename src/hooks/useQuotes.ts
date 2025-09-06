@@ -71,13 +71,13 @@ const refreshRandomQuote = useCallback(async () => {
 
   // Auto-refresh every 2 hours
  useEffect(() => {
-  setQuoteOfTheDay(getQuoteOfTheDay()); // daily quote
-  setRandomQuote(quotes[1]); // pick a fixed random quote on mount
-}, []); // empty dependency array, runs only once
+  const interval = setInterval(() => {
+    refreshQuoteOfTheDay();
+    refreshRandomQuote();
+  }, 2 * 60 * 60 * 1000);
 
-
-    return () => clearInterval(interval);
-  }, [refreshQuoteOfTheDay, refreshRandomQuote]);
+  return () => clearInterval(interval);
+}, [refreshQuoteOfTheDay, refreshRandomQuote]);
 
   return {
     quoteOfTheDay,
