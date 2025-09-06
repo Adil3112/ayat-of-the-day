@@ -49,19 +49,19 @@ const getQuoteOfTheDay = useCallback(() => {
 
   const refreshQuoteOfTheDay = useCallback(async () => {
   setIsLoadingQOTD(true);
-  await new Promise(resolve => setTimeout(resolve, 800));
-  const availableQuotes = quotes.filter(q => q.text !== quoteOfTheDay?.text);
-  setQuoteOfTheDay(availableQuotes[Math.floor(Math.random() * availableQuotes.length)]);
+  await new Promise(resolve => setTimeout(resolve, 500));
+  const available = quotes.filter(q => q.text !== quoteOfTheDay?.text);
+  setQuoteOfTheDay(available[Math.floor(Math.random() * available.length)]);
   setIsLoadingQOTD(false);
 }, [quoteOfTheDay]);
 
-  const refreshRandomQuote = useCallback(async () => {
-    setIsLoadingRandom(true);
-    // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 800));
-    setRandomQuote(getRandomQuote());
-    setIsLoadingRandom(false);
-  }, [getRandomQuote]);
+const refreshRandomQuote = useCallback(async () => {
+  setIsLoadingRandom(true);
+  await new Promise(resolve => setTimeout(resolve, 500));
+  const available = quotes.filter(q => q.text !== randomQuote?.text);
+  setRandomQuote(available[Math.floor(Math.random() * available.length)]);
+  setIsLoadingRandom(false);
+}, [randomQuote]);
 
   // Initialize quotes on mount
   useEffect(() => {
@@ -70,11 +70,11 @@ const getQuoteOfTheDay = useCallback(() => {
   }, [getQuoteOfTheDay, getRandomQuote]);
 
   // Auto-refresh every 2 hours
-  useEffect(() => {
-    const interval = setInterval(() => {
-      refreshQuoteOfTheDay();
-      refreshRandomQuote();
-    }, 2 * 60 * 60 * 1000); // 2 hours in milliseconds
+ useEffect(() => {
+  setQuoteOfTheDay(getQuoteOfTheDay()); // daily quote
+  setRandomQuote(quotes[1]); // pick a fixed random quote on mount
+}, []); // empty dependency array, runs only once
+
 
     return () => clearInterval(interval);
   }, [refreshQuoteOfTheDay, refreshRandomQuote]);
