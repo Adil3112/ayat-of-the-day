@@ -34,11 +34,12 @@ export const useQuotes = () => {
   const [isLoadingQOTD, setIsLoadingQOTD] = useState(false);
   const [isLoadingRandom, setIsLoadingRandom] = useState(false);
 
-  const getQuoteOfTheDay = useCallback(() => {
-    const today = new Date();
-    const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / 1000 / 60 / 60 / 24);
-    return quotes[dayOfYear % quotes.length];
-  }, []);
+ const getQuoteOfTheDay = useCallback(() => {
+  const today = new Date();
+  const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / 1000 / 60 / 60 / 24);
+  return quotes[dayOfYear % quotes.length];
+}, []);
+
 
   const getRandomQuote = useCallback(() => {
     const availableQuotes = quotes.filter(q => q.text !== quoteOfTheDay.text);
