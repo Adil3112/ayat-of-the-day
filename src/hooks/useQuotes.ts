@@ -34,10 +34,12 @@ export const useQuotes = () => {
   const [isLoadingQOTD, setIsLoadingQOTD] = useState(false);
   const [isLoadingRandom, setIsLoadingRandom] = useState(false);
 
- const getQuoteOfTheDay = useCallback(() => {
-  const availableQuotes = quotes.filter(q => q.text !== quoteOfTheDay?.text);
-  return availableQuotes[Math.floor(Math.random() * availableQuotes.length)];
-}, [quoteOfTheDay]);
+const getQuoteOfTheDay = useCallback(() => {
+  const today = new Date();
+  const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / 1000 / 60 / 60 / 24);
+  return quotes[dayOfYear % quotes.length];
+}, []); // no dependency
+
 
 
   const getRandomQuote = useCallback(() => {
@@ -46,12 +48,12 @@ export const useQuotes = () => {
   }, [quoteOfTheDay]);
 
   const refreshQuoteOfTheDay = useCallback(async () => {
-    setIsLoadingQOTD(true);
-    // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 800));
-    setQuoteOfTheDay(getQuoteOfTheDay());
-    setIsLoadingQOTD(false);
-  }, [getQuoteOfTheDay]);
+  setIsLoadingQOTD(true);
+  await new Promise(resolve => setTimeout(resolve, 800));
+  const availableQuotes = quotes.filter(q => q.text !== quoteOfTheDay?.text);
+  setQuoteOfTheDay(availableQuotes[Math.floor(Math.random() * availableQuotes.length)]);
+  setIsLoadingQOTD(false);
+}, [quoteOfTheDay]);
 
   const refreshRandomQuote = useCallback(async () => {
     setIsLoadingRandom(true);
