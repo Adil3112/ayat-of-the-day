@@ -33,12 +33,12 @@ const Index = () => {
       <main className="container mx-auto px-4 pb-16">
         <div className="grid gap-8 md:grid-cols-2 max-w-6xl mx-auto">
          <QuoteCard
-  title="Quote of the Day"
-  quote={quoteOfTheDay?.text || "Loading..."}
-  author={quoteOfTheDay?.author || "Unknown"}
-  onRefresh={handleRefresh(refreshQuoteOfTheDay)}
-  isLoading={isLoadingQOTD}
-/>
+          title="Quote of the Day"
+          quote={quoteOfTheDay?.text || "Loading..."}
+          author={quoteOfTheDay?.author || "Unknown"}
+          onRefresh={handleRefresh(refreshQuoteOfTheDay)}
+          isLoading={isLoadingQOTD}
+          />
 
 <QuoteCard
   title="Random Inspiration"
